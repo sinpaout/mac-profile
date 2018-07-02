@@ -1,5 +1,5 @@
 # shell session
-if [ -n "$SSH_CLIENT" ]; then 
+if [ -n "$SSH_CLIENT" ]; then
   sshSession=" ssh-session"
 fi
 
@@ -10,19 +10,31 @@ fi
 # support git branch
 PS1='\[\033[40;1;32m\]\u\[\033[2;32m\]@\[\033[0m\]\[\033[40;32m\]\h \[\033[1;36m\]\w \[\033[31m\]$(__git_ps1 "[%s] ")\[\033[00m\]\[\033[0m\]\[\033[40;2;37m\]`date +"%m-%d %H:%M"` \[\033[0m\]\n\\$ '
 
+# completion
+if [ ! -f $(brew --prefix)/etc/bash_completion ]; then
+  brew install bash-completion
+fi
+
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
+
 # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
 # JAVA
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+# export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 
 # python
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
-alias ll="ls -alG"
+# ruby
+eval "$(rbenv init -)"
+
+alias ll="ls -alGF"
 alias ls="ls -G"
 alias myip="curl inet-ip.info"
 
@@ -57,16 +69,11 @@ alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
 alias pip="pip --trusted-host pypi.python.org"
 alias pip3="pip3 --trusted-host pypi.python.org"
 
-# completion
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-. $(brew --prefix)/etc/bash_completion
-fi
-
 # https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
-source ~/profile/git-completion.bash
-source ~/profile/git-prompt.sh
-source ~/profile/docker-compose.sh
-source ~/profile/docker
+source ~/mac-profile/git-completion.bash
+source ~/mac-profile/git-prompt.sh
+source ~/mac-profile/docker-compose.sh
+source ~/mac-profile/docker
 
 # export PATH=$PATH:/Volumes/data-hd/bin/npm/bin
 export PATH=$PATH:`npm bin -g`
