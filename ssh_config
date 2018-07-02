@@ -10,3 +10,11 @@ Host github
   IdentityFile ~/.ssh/id_rsa
   TCPKeepAlive yes
   IdentitiesOnly yes
+
+Host github.private
+  User git
+  Port 22
+  HostName github.com
+  IdentityFile ~/.ssh/github_id_rsa
+  TCPKeepAlive yes
+  IdentitiesOnly yes
